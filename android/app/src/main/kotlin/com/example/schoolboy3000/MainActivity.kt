@@ -1,4 +1,4 @@
-package com.example.templates
+package com.example.schoolboy3000
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
