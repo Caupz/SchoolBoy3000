@@ -1,72 +1,83 @@
-import 'package:flutter/material.dart';
-import 'package:schoolboy3000/pages/homepage.dart';
 import 'package:sqflite/sqflite.dart';
+import 'dart:convert';
 
 // More instructions: https://pub.dev/packages/sqflite
 
 class AppDB {
+  var db;
 
-  static connection() async {
-    var db = await openDatabase('schoolboy.db');
-    return db;
+  static open() async {
+    var _db = await openDatabase('schoolboy.db');
+    return _db;
   }
 
-  static close(db) async {
+  close() async {
     await db.close();
   }
 
-  /*
-  var databasesPath = await getDatabasesPath();
-  String path = join(databasesPath, 'demo.db');
-  * */
+  insertInto(String jsonStr) async {
+    final Map parsed = json.decode(jsonStr);
 
-  static insertInto() async {
-    /*
-    await database.transaction((txn) async {
-    int id1 = await txn.rawInsert(
-        'INSERT INTO Test(name, value, num) VALUES("some name", 1234, 456.789)');
-    print('inserted1: $id1');
-    int id2 = await txn.rawInsert(
-          'INSERT INTO Test(name, value, num) VALUES(?, ?, ?)',
-          ['another name', 12345678, 3.1416]);
-      print('inserted2: $id2');
+    await db.transaction((txn) async {
+      String fields = "";
+      String params = "";
+      List<dynamic> values = new List<dynamic>();
+
+      parsed.forEach((k, v) => () {
+        fields += k+",";
+        params += "?,";
+        values.add(v);
+      });
+
+      fields = removeLastChar(fields);
+      params = removeLastChar(params);
+
+      int result = await txn.rawInsert(
+          'INSERT INTO Test('+fields+') VALUES('+params+')',
+          values
+      );
+      return result;
     });
-    * */
   }
 
-  static update() async {
-    /*
-    int count = await database.rawUpdate(
-    'UPDATE Test SET name = ?, value = ? WHERE name = ?',
-    ['updated name', '9876', 'some name']);
-    print('updated: $count');
-    * */
+  static String removeLastChar(String str) {
+    if (str != null && str.length > 0) {
+      str = str.substring(0, str.length - 1);
+    }
+    return str;
   }
 
-  static delete() async {
-    /*
-    count = await database.rawDelete('DELETE FROM Test WHERE name = ?', ['another name']);
-    assert(count == 1);
-    * */
+  update<E>(String tableName, String fieldToUpdate, E updateVal, String conditionField, E conditionVal) async {
+    int count = await db.rawUpdate(
+        'UPDATE '+tableName+' SET '+fieldToUpdate+' = ? WHERE '+conditionField+' = ?',
+        [updateVal, conditionVal]
+    );
+    return count;
   }
 
-  static count() async {
-    /*
-    count = Sqflite.firstIntValue(await database.rawQuery('SELECT COUNT(*) FROM Test'));
-    assert(count == 2);
-    * */
+  delete<E>(String tableName, String conditionField, E conditionVal) async {
+    int count = await db.rawDelete('DELETE FROM '+tableName+' WHERE '+conditionField+' = ?', [conditionVal]);
+    return count;
   }
 
-  static select() async {
-    /*
-    List<Map> list = await database.rawQuery('SELECT * FROM Test');
-    List<Map> expectedList = [
-      {'name': 'updated name', 'id': 1, 'value': 9876, 'num': 456.789},
-      {'name': 'another name', 'id': 2, 'value': 12345678, 'num': 3.1416}
-    ];
-    print(list);
-    print(expectedList);
-    assert(const DeepCollectionEquality().equals(list, expectedList));
-    * */
+  count<E>(String tableName, String conditionField, E conditionVal) async {
+    int _count;
+    if(conditionField != "" && conditionVal != null) {
+      _count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM '+tableName+' WHERE '+conditionField+' = ?', [conditionVal]));
+    } else {
+      _count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM '+tableName));
+    }
+    return _count;
+  }
+
+  select<E>(String tableName, String conditionField, E conditionVal) async {
+    List<Map> list;
+
+    if(conditionField != "" && conditionVal != null) {
+      list = await db.rawQuery('SELECT * FROM '+tableName+' WHERE '+conditionField+' = ?', [conditionVal]);
+    } else {
+      list = await db.rawQuery('SELECT * FROM '+tableName);
+    }
+    return list;
   }
 }
