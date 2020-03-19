@@ -13,7 +13,7 @@ class _HomePageState extends State<HomePage> {
       appBar: new AppBar(title: new Text("SchoolBoy3000"), backgroundColor: Colors.blueAccent,),
       drawer: DrawerWidget(),
       body: new Center(
-        child: new Text("See on avaleht", style: new TextStyle(fontSize: 40.0),),
+        child: new Text("See on avaleht!", style: new TextStyle(fontSize: 40.0),),
       ),
     );
   }

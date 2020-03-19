@@ -44,15 +44,15 @@ class DrawerWidget extends StatelessWidget{
               },
             ),
             new ListTile(
-              title: new Text("Home", style: new TextStyle(fontSize: 20.0),),
-              leading: new Icon(Icons.home),
-              onTap: (){
-                Navigator.of(context).pop();
-                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> HomePage()));
-              },
+                title:  new Text("Home", style: new TextStyle(fontSize: 20.0),),
+                leading: new Icon(Icons.home),
+                onTap: (){
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> HomePage()));
+                },
             ),
-          ],
+        ],
         ),
-      );
+    );
   }
 }
