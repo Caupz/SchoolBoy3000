@@ -14,4 +14,9 @@ dart - https://dart.dev/get-dart
 6. Githubi lisades ärge asendage .git kausta!
 7. Enjoy!  
   
+Easy way to get thing running. 
+1. Create New Flutter Project through Android SDK.  
+2. Copy lib content to your created project along with .git folder correspondingly.  
+3. Done.  
+  
 Rakenduse käivitamiseks telefonis näiteks käivita käsureal: flutter run
