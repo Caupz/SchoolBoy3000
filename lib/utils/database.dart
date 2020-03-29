@@ -1,43 +1,61 @@
 import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:sqflite_migrations/sqflite_migrations.dart';
 
 // More instructions: https://pub.dev/packages/sqflite
 
 class AppDB {
-  var db;
-
-  static open() async {
-    var _db = await openDatabase('schoolboy.db');
-    return _db;
+  static runMigration(Database db) async {
+    //await db.execute('DROP TABLE subject;');
+    await db.execute('CREATE TABLE IF NOT EXISTS subject (id INTEGER PRIMARY KEY AUTOINCREMENT, weekday TEXT NOT NULL, semester TEXT NOT NULL, subject TEXT NOT NULL, teacher TEXT NOT NULL, info TEXT NOT NULL);');
+    debugPrint('EXECUTING MIGRATIONS DONE');
   }
 
-  close() async {
-    await db.close();
-  }
+  static insertInto(String tableName, String jsonStr) async {
+    debugPrint('insertInto PARSED STR: $jsonStr');
+    Map<String, dynamic> parsed = jsonDecode(jsonStr);
 
-  insertInto(String jsonStr) async {
-    final Map parsed = json.decode(jsonStr);
+    var db = await openDatabase('schoolboy.db');
+    runMigration(db);
 
     await db.transaction((txn) async {
       String fields = "";
       String params = "";
-      List<dynamic> values = new List<dynamic>();
+      var values = new List<dynamic>();
 
+      debugPrint('PARSED DATA:');
+      parsed.map((key, val) {
+        debugPrint('KEY $key VAL $val');
+
+        fields += "'$key',";
+        params += "?,";
+        values.add(val);
+
+        return new MapEntry(key, val);
+      });
+/*
       parsed.forEach((k, v) => () {
+        debugPrint("KEY");
+        debugPrint(k);
+        debugPrint("VAL");
+        debugPrint(v);
         fields += k+",";
         params += "?,";
         values.add(v);
-      });
+      });*/
 
       fields = removeLastChar(fields);
       params = removeLastChar(params);
 
       int result = await txn.rawInsert(
-          'INSERT INTO Test('+fields+') VALUES('+params+')',
+          'INSERT INTO $tableName($fields) VALUES($params)',
           values
       );
       return result;
     });
+
+    await db.close();
   }
 
   static String removeLastChar(String str) {
@@ -47,37 +65,51 @@ class AppDB {
     return str;
   }
 
-  update<E>(String tableName, String fieldToUpdate, E updateVal, String conditionField, E conditionVal) async {
+  static update<E>(String tableName, String fieldToUpdate, E updateVal, String conditionField, E conditionVal) async {
+    var db = await openDatabase('schoolboy.db');
     int count = await db.rawUpdate(
         'UPDATE '+tableName+' SET '+fieldToUpdate+' = ? WHERE '+conditionField+' = ?',
         [updateVal, conditionVal]
     );
+    await db.close();
     return count;
   }
 
-  delete<E>(String tableName, String conditionField, E conditionVal) async {
+  static delete<E>(String tableName, String conditionField, E conditionVal) async {
+    var db = await openDatabase('schoolboy.db');
     int count = await db.rawDelete('DELETE FROM '+tableName+' WHERE '+conditionField+' = ?', [conditionVal]);
+    await db.close();
     return count;
   }
 
-  count<E>(String tableName, String conditionField, E conditionVal) async {
+  static count<E>(String tableName, String conditionField, E conditionVal) async {
+    var db = await openDatabase('schoolboy.db');
     int _count;
     if(conditionField != "" && conditionVal != null) {
       _count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM '+tableName+' WHERE '+conditionField+' = ?', [conditionVal]));
     } else {
       _count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM '+tableName));
     }
+    await db.close();
     return _count;
   }
 
-  select<E>(String tableName, String conditionField, E conditionVal) async {
+  static select<E>(String tableName, String conditionField, E conditionVal) async {
     List<Map> list;
+    var db = await openDatabase('schoolboy.db');
+    runMigration(db);
 
     if(conditionField != "" && conditionVal != null) {
-      list = await db.rawQuery('SELECT * FROM '+tableName+' WHERE '+conditionField+' = ?', [conditionVal]);
+      list = await db.rawQuery('SELECT * FROM $tableName WHERE $conditionField = ?', [conditionVal]);
+      debugPrint('SELECT * FROM $tableName WHERE $conditionField = ?');
     } else {
-      list = await db.rawQuery('SELECT * FROM '+tableName);
+      list = await db.rawQuery('SELECT * FROM $tableName');
+      debugPrint('SELECT * FROM $tableName');
     }
+
+    debugPrint("RESULT DATA");
+    debugPrint(jsonEncode(list));
+    await db.close();
     return list;
   }
 }
