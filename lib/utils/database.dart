@@ -1,7 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:sqflite_migrations/sqflite_migrations.dart';
 
 // More instructions: https://pub.dev/packages/sqflite
 
@@ -13,7 +12,7 @@ class AppDB {
   }
 
   static insertInto(String tableName, String jsonStr) async {
-    debugPrint('insertInto PARSED STR: $jsonStr');
+    //debugPrint('insertInto PARSED STR: $jsonStr');
     Map<String, dynamic> parsed = jsonDecode(jsonStr);
 
     var db = await openDatabase('schoolboy.db');
@@ -24,9 +23,9 @@ class AppDB {
       String params = "";
       var values = new List<dynamic>();
 
-      debugPrint('PARSED DATA:');
+      //debugPrint('PARSED DATA:');
       parsed.map((key, val) {
-        debugPrint('KEY $key VAL $val');
+        //debugPrint('KEY $key VAL $val');
 
         fields += "'$key',";
         params += "?,";
@@ -34,16 +33,6 @@ class AppDB {
 
         return new MapEntry(key, val);
       });
-/*
-      parsed.forEach((k, v) => () {
-        debugPrint("KEY");
-        debugPrint(k);
-        debugPrint("VAL");
-        debugPrint(v);
-        fields += k+",";
-        params += "?,";
-        values.add(v);
-      });*/
 
       fields = removeLastChar(fields);
       params = removeLastChar(params);
@@ -109,6 +98,18 @@ class AppDB {
 
     debugPrint("RESULT DATA");
     debugPrint(jsonEncode(list));
+    debugPrint("RESULT DATA length "+list.length.toString());
+
+    /*
+    for(int i = 0; i < list.length; i++) {
+      debugPrint("RESULT DATA $i");
+
+      list[i].forEach((key, value) {
+        debugPrint("KEY $key VALUE $value");
+      });
+    }
+    */
+
     await db.close();
     return list;
   }
