@@ -19,20 +19,13 @@ class SubjectsPage extends StatelessWidget {
   Widget buildBody(BuildContext ctxt, int index, MainModel model) {
     debugPrint("buildBody INIT 1 ${model.subjects.length}");
     //printSubjects(model.subjects);
-
     //debugPrint('buildBody: $index LENGTH ${model.subjects.length}');
-
     List<Subject> list = model.subjects;
 
-    for(int i = 0; i < list.length; i++) {
-      debugPrint('buildBody FOR: $i');
-      String subjectData = "ID[${list[i].id.toString()}] NAME[${list[i].name.toString()}]";
-      debugPrint('buildBody: NAME [$subjectData]');
+    String subjectData = "ID[${list[index].id.toString()}] NAME[${list[index].name.toString()}]";
+    debugPrint('buildBody: NAME [$subjectData]');
 
-      return new Text("$subjectData");
-    }
-
-    return new Text("No subjects");
+    return new Text("$subjectData");
   }
 
   @override
