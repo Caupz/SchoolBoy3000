@@ -12,7 +12,6 @@ class AppDB {
   }
 
   static insertInto(String tableName, String jsonStr) async {
-    //debugPrint('insertInto PARSED STR: $jsonStr');
     Map<String, dynamic> parsed = jsonDecode(jsonStr);
 
     var db = await openDatabase('schoolboy.db');
@@ -23,14 +22,10 @@ class AppDB {
       String params = "";
       var values = new List<dynamic>();
 
-      //debugPrint('PARSED DATA:');
       parsed.map((key, val) {
-        //debugPrint('KEY $key VAL $val');
-
         fields += "'$key',";
         params += "?,";
         values.add(val);
-
         return new MapEntry(key, val);
       });
 
@@ -90,17 +85,15 @@ class AppDB {
 
     if(conditionField != "" && conditionVal != null) {
       list = await db.rawQuery('SELECT * FROM $tableName WHERE $conditionField = ?', [conditionVal]);
-      debugPrint('SELECT * FROM $tableName WHERE $conditionField = ?');
+      //debugPrint('SELECT * FROM $tableName WHERE $conditionField = ?');
     } else {
       list = await db.rawQuery('SELECT * FROM $tableName');
-      debugPrint('SELECT * FROM $tableName');
+      //debugPrint('SELECT * FROM $tableName');
     }
 
-    debugPrint("RESULT DATA");
+    /* Testimiseks, et näha mis sisu tuli tagasi.
     debugPrint(jsonEncode(list));
-    debugPrint("RESULT DATA length "+list.length.toString());
 
-    /*
     for(int i = 0; i < list.length; i++) {
       debugPrint("RESULT DATA $i");
 

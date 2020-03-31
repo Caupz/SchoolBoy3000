@@ -9,23 +9,31 @@ class SubjectsPage extends StatelessWidget {
   final String pageText;
   SubjectsPage(this.pageText);
 
-  void printSubjects(List<Subject> subs) {
-    debugPrint("printSubjects INIT");
-    for(int i = 0; i < subs.length; i++) {
-      debugPrint("printSubjects $i ${subs[i].name}");
-    }
-  }
-
   Widget buildBody(BuildContext ctxt, int index, MainModel model) {
-    debugPrint("buildBody INIT 1 ${model.subjects.length}");
-    //printSubjects(model.subjects);
-    //debugPrint('buildBody: $index LENGTH ${model.subjects.length}');
     List<Subject> list = model.subjects;
 
-    String subjectData = "ID[${list[index].id.toString()}] NAME[${list[index].name.toString()}]";
-    debugPrint('buildBody: NAME [$subjectData]');
+    int id = list[index].id; // TODO seda kasutada onPressed muutmisse minnes.
+    String subjectName = list[index].name;
+    String teacherName = list[index].teacher;
+    String semester = list[index].semester;
+    String weekday = list[index].weekday;
 
-    return new Text("$subjectData");
+    return new Container(
+        margin: const EdgeInsets.only(top: 10.0),
+        child: RaisedButton(
+          padding: EdgeInsets.all(15.0),
+          child: Row(children: <Widget>[
+            Expanded(child: Text(semester, textAlign: TextAlign.center)),
+            Expanded(child: Text(weekday, textAlign: TextAlign.center)),
+            Expanded(child: Text(subjectName, textAlign: TextAlign.center)),
+            Expanded(child: Text(teacherName, textAlign: TextAlign.center)),
+            ],
+          ),
+          onPressed: (){
+            // TODO minna vastava variable id ehk list[index].id subject muutmisse.
+          },
+      )
+    );
   }
 
   @override
@@ -35,14 +43,6 @@ class SubjectsPage extends StatelessWidget {
           return new Scaffold(
               appBar: new AppBar(title: new Text(pageText),),
               body: Column(children: <Widget>[
-                Stack(children: [
-                  Container(
-                      color: Colors.white,
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.all(25.0),
-                      child: new Text(pageText, style: new TextStyle(fontSize: 40.0),)
-                  )
-                ]),
                 Container(
                     width: MediaQuery.of(context).size.width,
                     height: 50,
@@ -54,6 +54,11 @@ class SubjectsPage extends StatelessWidget {
                         Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> SubjectsRoute("Subjects route")));
                       },
                     )
+                ),
+                Container(
+                    margin: const EdgeInsets.fromLTRB(20, 20, 0, 10),
+                    width: MediaQuery.of(context).size.width,
+                    child: Text('All subjects:', style: TextStyle(fontSize: 20))
                 ),
                 new ListView.builder(
                     shrinkWrap: true,

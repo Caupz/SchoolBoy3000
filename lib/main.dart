@@ -14,28 +14,15 @@ void main() {
 
 class MyApp extends StatelessWidget {
 
-  void printSubjects(List<Subject> subs) {
-    debugPrint("printSubjects INIT");
-    for(int i = 0; i < subs.length; i++) {
-      debugPrint("printSubjects $i ${subs[i].name}");
-    }
-  }
-
   void getSubjects(MainModel model) {
-    debugPrint("getSubjects INIT");
     Future<dynamic> subjects = AppDB.select("subject", "", null);
-    //debugPrint("getSubjects before then");
 
     subjects.then((value) {
-        //debugPrint("getSubjects then 1");
         List<Map> list = value;
-        //debugPrint("getSubjects then 2");
 
         for(int i = 0; i < list.length; i++) {
-          //debugPrint("getSubjects I: $i");
           int id = -1;
           String wday = "", sem = "", name = "", teacher = "", info = "";
-          // "weekday": weekday, "semester": semester, "subject": subject, "teacher": teacher, "info":info};
 
           list[i].forEach((key, value) {
             switch(key) {
@@ -49,14 +36,7 @@ class MyApp extends StatelessWidget {
 
           });
           model.addSubjects(id, wday, sem, name, teacher, info, false, false);
-          debugPrint("getSubjects DATA: $wday | $sem | $name | $teacher | $info");
         }
-
-        //printSubjects(model.subjects);
-
-        debugPrint("getSubjects ENDED");
-        // value on List<Map>
-        //debugPrint(value);
       })
       .catchError((error) => () {
         debugPrint("getSubjects ERROR: $error");
