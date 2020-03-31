@@ -11,8 +11,8 @@ class MainModel extends Model {
     return _subjects;
   }
 
-  void addSubjects(int id, String weekday, String semester, String name, String teacher, String info, bool saveToDB, bool notifiy) {
-    Subject subject = new Subject(id, weekday, semester, name, teacher, info);
+  void addSubjects(int id, String semester, String name, String teacher, String info, bool saveToDB, bool notifiy) {
+    Subject subject = new Subject(id, semester, name, teacher, info);
     _subjects.add(subject);
 
     if(saveToDB) {

@@ -16,7 +16,6 @@ class SubjectsPage extends StatelessWidget {
     String subjectName = list[index].name;
     String teacherName = list[index].teacher;
     String semester = list[index].semester;
-    String weekday = list[index].weekday;
 
     return new Container(
         margin: const EdgeInsets.only(top: 10.0),
@@ -24,7 +23,6 @@ class SubjectsPage extends StatelessWidget {
           padding: EdgeInsets.all(15.0),
           child: Row(children: <Widget>[
             Expanded(child: Text(semester, textAlign: TextAlign.center)),
-            Expanded(child: Text(weekday, textAlign: TextAlign.center)),
             Expanded(child: Text(subjectName, textAlign: TextAlign.center)),
             Expanded(child: Text(teacherName, textAlign: TextAlign.center)),
             ],

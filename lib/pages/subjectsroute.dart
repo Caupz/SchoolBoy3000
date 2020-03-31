@@ -8,11 +8,9 @@ import '../models/mainmodel.dart';
 class SubjectsRoute extends StatelessWidget {
   final String pageText;
   SubjectsRoute(this.pageText);
-  String dropdownValue = "Monday";
   String dropdownSemester = "S20";
 
   // Values from fields
-  String weekDay = "Monday";
   String semester = "S20";
   String subjectName = "NO-SUBJECT-NAME";
   String teacherName = "NO-TEACHER-NAME";
@@ -30,31 +28,6 @@ class SubjectsRoute extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.all(25.0),
                     child: new Text("Fill in the subject fields", style: new TextStyle(fontSize: 30.0),)
-                ),
-                Container(
-                  child: DropdownButton<String>(
-                      value: dropdownValue,
-                      icon: Icon(Icons.arrow_downward),
-                      iconSize: 24,
-                      elevation: 16,
-                      style: TextStyle(
-                          color: Colors.blueAccent
-                      ),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.blueAccent,
-                      ),
-                      onChanged: (String newValue) {
-                        weekDay = newValue;
-                      },
-                      items: <String>['Monday', 'Thuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList()
-                  ),
                 ),
                 Container(
                   child: DropdownButton<String>(
@@ -124,7 +97,7 @@ class SubjectsRoute extends StatelessWidget {
                       padding: EdgeInsets.all(15.0),
                       child: Text('Add subject', style: TextStyle(fontSize: 20)),
                       onPressed: (){
-                        model.addSubjects(-1, weekDay, semester, subjectName, teacherName, additionalInfo, true, true);
+                        model.addSubjects(-1, semester, subjectName, teacherName, additionalInfo, true, true);
                         Navigator.of(context).pop();
                         Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> SubjectsPage("Subjects page")));
                       },

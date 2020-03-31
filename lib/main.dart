@@ -22,12 +22,11 @@ class MyApp extends StatelessWidget {
 
         for(int i = 0; i < list.length; i++) {
           int id = -1;
-          String wday = "", sem = "", name = "", teacher = "", info = "";
+          String sem = "", name = "", teacher = "", info = "";
 
           list[i].forEach((key, value) {
             switch(key) {
               case "id": id = value; break;
-              case "weekday": wday = value; break;
               case "semester": sem = value; break;
               case "subject": name = value; break;
               case "teacher": teacher = value; break;
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
             }
 
           });
-          model.addSubjects(id, wday, sem, name, teacher, info, false, false);
+          model.addSubjects(id, sem, name, teacher, info, false, false);
         }
       })
       .catchError((error) => () {
