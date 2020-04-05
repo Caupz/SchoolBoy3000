@@ -18,19 +18,46 @@ class SubjectsPage extends StatelessWidget {
     String semester = list[index].semester;
 
     return new Container(
-        margin: const EdgeInsets.only(top: 10.0),
-        child: RaisedButton(
-          padding: EdgeInsets.all(15.0),
-          child: Row(children: <Widget>[
-            Expanded(child: Text(semester, textAlign: TextAlign.center)),
-            Expanded(child: Text(subjectName, textAlign: TextAlign.center)),
-            Expanded(child: Text(teacherName, textAlign: TextAlign.center)),
-            ],
+      margin: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: new RaisedButton(
+                child: Text(semester),
+                onPressed: () {
+                  // TODO minna vastava variable id ehk list[index].id subject muutmisse.
+                }),
           ),
-          onPressed: (){
-            // TODO minna vastava variable id ehk list[index].id subject muutmisse.
-          },
-      )
+          Expanded(
+            child: new RaisedButton(
+                child: Text(subjectName),
+                onPressed: () {
+                  // TODO minna vastava variable id ehk list[index].id subject muutmisse.
+                }),
+          ),
+          Expanded(
+            child: new RaisedButton(
+                child: Text(teacherName),
+                onPressed: () {
+                  // TODO minna vastava variable id ehk list[index].id subject muutmisse.
+                }),
+          ),
+          Expanded(
+            child: new IconButton(
+              padding: EdgeInsets.only(bottom: 1.0),
+              icon: new Icon(
+              Icons.delete,
+              color: Colors.black,
+              size: 44.0,
+              ),
+              onPressed: () {
+                AppDB.delete(semester, subjectName, teacherName);
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 
