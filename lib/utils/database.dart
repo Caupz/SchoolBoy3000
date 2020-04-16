@@ -13,7 +13,6 @@ class AppDB {
 
   static insertInto(String tableName, String jsonStr) async {
     Map<String, dynamic> parsed = jsonDecode(jsonStr);
-
     var db = await openDatabase('schoolboy.db');
     runMigration(db);
 
