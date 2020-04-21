@@ -3,24 +3,29 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:schoolboy3000/utils/database.dart';
 import 'dart:convert';
 import 'package:schoolboy3000/models/subject.dart';
-import 'package:schoolboy3000/models/addToDay.dart';
+import 'package:schoolboy3000/models/subjectentry.dart';
 
 class MainModel extends Model {
   //lessonplan to db
-  List<addToDay> _addtoday = new List<addToDay>();
+  List<SubjectEntry> _subjectEntries = new List<SubjectEntry>();
 
-  List<addToDay> get addtoday {
-    return _addtoday;
+  List<SubjectEntry> get subjectEntries {
+    return _subjectEntries;
   }
 
-  void AddToDay(int id, String selectedDay, String subject, DateTime startTime, DateTime endTime, String room, bool saveToDB, bool notifiy) {
-    addToDay addtoday = new addToDay(id, selectedDay, subject, startTime, endTime, room);
-    _addtoday.add(addtoday);
+  void addSubjectEntry(int id, String selectedDay, String subject, String startTime, String endTime, String room, bool saveToDB, bool notifiy) {
+    SubjectEntry entry = new SubjectEntry(id, selectedDay, subject, startTime, endTime, room);
+    _subjectEntries.add(entry);
 
     if(saveToDB) {
-      addtoday.id = null;
-      String jsonStr = jsonEncode(addtoday);
-      AppDB.insertInto("addtoday", jsonStr);
+
+      entry.id = null;
+      debugPrint('SUBJECTENTRY');
+      debugPrint('subjectentrylõpp' + entry.startTime + "start and end" + entry.endTime);
+      String jsonStr = jsonEncode(entry);
+      debugPrint('SUBJECTENTRY2');
+      AppDB.insertInto("subject_entry", jsonStr);
+      debugPrint('SUBJECTENTRY' +  entry.id.toString());debugPrint('SUBJECTENTRY' +  entry.id.toString());debugPrint('SUBJECTENTRY' +  entry.id.toString());debugPrint('SUBJECTENTRY' +  entry.id.toString());
     }
 
     if(notifiy) {

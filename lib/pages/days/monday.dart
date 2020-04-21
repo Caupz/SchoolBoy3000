@@ -3,7 +3,7 @@ import 'package:schoolboy3000/pages/days/mondayroute.dart';
 import 'package:schoolboy3000/utils/database.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../../models/mainmodel.dart';
-import 'package:schoolboy3000/models/addToDay.dart';
+import 'package:schoolboy3000/models/subjectentry.dart';
 import 'package:intl/intl.dart';
 
 class Monday extends StatelessWidget {
@@ -11,18 +11,19 @@ class Monday extends StatelessWidget {
   Monday(this.pageText);
 
   Widget buildBody(BuildContext ctxt, int index, MainModel model) {
-    List<addToDay> list = model.addtoday;
+    List<SubjectEntry> list = model.subjectEntries;
 
     int id = list[index].id; // TODO seda kasutada onPressed muutmisse minnes.
-    String selectedDay = list[index].selectedDay;
+    String selected_day = list[index].selectedDay;
     String subject = list[index].subject;
-    DateTime startTime = list[index].startTime;
-    DateTime endTime = list[index].endTime;
+    String start_time = list[index].startTime.toString();
+    String end_time = list[index].endTime.toString();
     String room = list[index].room;
 
+/*    //Et saaks Textina datetime formati näidata
     var formatter = new DateFormat('H:m');
-    String formattedstartTime = formatter.format(startTime);
-    String formattedendTime = formatter.format(endTime);
+    String formattedstartTime = formatter.format(start_time);
+    String formattedendTime = formatter.format(end_time);*/
 
     return new Container(
       margin: const EdgeInsets.fromLTRB(20, 10, 0, 0),
@@ -38,14 +39,14 @@ class Monday extends StatelessWidget {
           ),
           Container(
             child: new RaisedButton(
-                child: Text(formattedstartTime),
+                child: Text(start_time),
                 onPressed: () {
                   // TODO minna vastava variable id ehk list[index].id subject muutmisse.
                 }),
           ),
           Container(
             child: new RaisedButton(
-                child: Text(formattedendTime),
+                child: Text(end_time),
                 onPressed: () {
                   // TODO minna vastava variable id ehk list[index].id subject muutmisse.
                 }),
@@ -58,6 +59,13 @@ class Monday extends StatelessWidget {
                 }),
           ),
           Container(
+            child: new RaisedButton(
+                child: Text('id on $id'),
+                onPressed: () {
+                  // id test
+                }),
+          ),
+          Container(
             child: new IconButton(
               padding: EdgeInsets.only(bottom: 1.0),
               icon: new Icon(
@@ -66,7 +74,7 @@ class Monday extends StatelessWidget {
                 size: 44.0,
               ),
               onPressed: () {
-                AppDB.delete('addToDay','id', id); //Needs doing
+                AppDB.delete('subject_entry','id', id); //Needs doing
               },
             ),
           ),
@@ -101,7 +109,7 @@ class Monday extends StatelessWidget {
                 ),
                 new ListView.builder(
                     shrinkWrap: true,
-                    itemCount: model.addtoday.length,
+                    itemCount: model.subjectEntries.length,
                     itemBuilder: (BuildContext ctxt, int index) => buildBody(ctxt, index, model)
                 )
               ])
