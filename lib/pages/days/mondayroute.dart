@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:scoped_model/scoped_model.dart';
 import '../../models/mainmodel.dart';
 import 'package:schoolboy3000/pages/days/monday.dart';
-import 'package:schoolboy3000/models/addToDay.dart';
+import 'package:schoolboy3000/models/subjectentry.dart';
 
 class Mondayroute extends StatelessWidget {
   final String pageText;
@@ -15,8 +15,8 @@ class Mondayroute extends StatelessWidget {
   String dropdownDay = "Monday";
   String selectedDay = "Monday";
   String subject = "Teoreetiline informaatika";
-  DateTime startTime = new DateTime.now();
-  DateTime endTime = new DateTime.now();
+  String startTime = "";
+  String endTime = "";
   String room = "NO-ROOM";
 
   String _time = "Not set";
@@ -121,9 +121,9 @@ class Mondayroute extends StatelessWidget {
                           ),
                           showTitleActions: true,
                           onConfirm: (time) {
-                            startTime = time;
-                            print('confirm $time');
-                            _time = '${time.hour} : ${time.minute} : ${time.second}';
+                            debugPrint('confirm $time');
+                            _time = '${time.hour} - ${time.minute}';
+                            startTime = _time;
                           },
                           currentTime: DateTime.now(), locale: LocaleType.en);
                     },
@@ -140,10 +140,11 @@ class Mondayroute extends StatelessWidget {
                           ),
                           showTitleActions: true,
                           onConfirm: (time) {
-                            print('confirm $time');
-                            endTime = time;
+                            debugPrint('confirm $time');
                             print(endTime);
-                            '${time.hour} : ${time.minute}';
+                            _time = '${time.hour} - ${time.minute}';
+                            endTime = _time;
+
                           },
                           currentTime: DateTime.now(), locale: LocaleType.en);
                     },
@@ -163,7 +164,7 @@ class Mondayroute extends StatelessWidget {
                   onPressed: () {
                     //tahad tagasi minna siis pop enne data savemist, muidu ei tööta
                     Navigator.of(context).pop();
-                    model.AddToDay(-1, selectedDay, subject, startTime, endTime, room, true, true);
+                    model.addSubjectEntry(-1, selectedDay, subject, startTime, endTime, room, true, true);
                    // Navigator.of(context).push(new MaterialPageRoute(
                        // builder: (BuildContext context) => new Monday("Monday")),);
                   },

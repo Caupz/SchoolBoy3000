@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 
 // More instructions: https://pub.dev/packages/sqflite
 
+
+
 class AppDB {
   static runMigration(Database db) async {
     //await db.execute('DROP TABLE subject;');
+    //await db.execute("DROP TABLE subject_entry;");
     await db.execute('CREATE TABLE IF NOT EXISTS subject (id INTEGER PRIMARY KEY AUTOINCREMENT, weekday TEXT NOT NULL, semester TEXT NOT NULL, subject TEXT NOT NULL, teacher TEXT NOT NULL, info TEXT NOT NULL);');
+    await db.execute('CREATE TABLE IF NOT EXISTS subject_entry (id INTEGER PRIMARY KEY AUTOINCREMENT, selected_day TEXT NOT NULL, subject TEXT NOT NULL, start_time TEXT NOT NULL, end_time TEXT NOT NULL, room TEXT NOT NULL);');
     debugPrint('EXECUTING MIGRATIONS DONE');
   }
 
@@ -16,7 +20,7 @@ class AppDB {
     var db = await openDatabase('schoolboy.db');
     runMigration(db);
 
-    await db.transaction((txn) async {
+    int insertedId = await db.transaction((txn) async {
       String fields = "";
       String params = "";
       var values = new List<dynamic>();
@@ -39,6 +43,7 @@ class AppDB {
     });
 
     await db.close();
+    return insertedId;
   }
 
   static String removeLastChar(String str) {
