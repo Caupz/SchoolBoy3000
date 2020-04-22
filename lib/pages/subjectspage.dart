@@ -14,7 +14,7 @@ class SubjectsPage extends StatelessWidget {
     List<Subject> list = model.subjects;
 
     int id = list[index].id; // TODO seda kasutada onPressed muutmisse minnes.
-    String subjectName = list[index].name;
+    String subjectName = list[index].subject;
     String teacherName = list[index].teacher;
     String semester = list[index].semester;
 
@@ -55,7 +55,7 @@ class SubjectsPage extends StatelessWidget {
               size: 44.0,
               ),
               onPressed: () {
-                AppDB.delete("subject", "id", index); //Needs doing
+                AppDB.delete("subject", "id", id); //Needs doing
                 list.removeAt(index);
               },
             ),

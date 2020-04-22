@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
             }
 
           });
+          debugPrint("subject id "+id.toString()+" name "+name);
           model.addSubjects(id, sem, name, teacher, info, false, false);
         }
       })
@@ -65,6 +66,7 @@ class MyApp extends StatelessWidget {
             }
 
           });
+          debugPrint("subject id "+id.toString()+" name "+sub);
           model.addSubjectEntry(id, day, sub, stime, etime, room, false, false);
         }
       })
