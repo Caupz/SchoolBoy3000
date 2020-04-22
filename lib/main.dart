@@ -15,7 +15,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
 
-  void getSubjects(MainModel model) {
+  void getSubjects(MainModel model)  {
     Future<dynamic> subjects = AppDB.select("subject", "", null);
 
     subjects.then((value) {
