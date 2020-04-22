@@ -17,19 +17,21 @@ class SubjectEntry {
     this.room = _room;
   }
 
-  Subject.fromJson(Map<String, dynamic> json)
+  SubjectEntry.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        semester = json['semester'],
+        selectedDay = json['selected_day'],
         subject = json['subject'],
-        teacher = json['teacher'],
-        info = json['info'];
+        startTime = json['start_time'],
+        endTime = json['end_time'],
+        room = json['room'];
 
   Map<String, dynamic> toJson() =>
       {
         'id': id,
-        'semester': semester,
+        'selected_day': selectedDay,
         'subject': subject,
-        'teacher': teacher,
-        'info': info,
+        'start_time': startTime,
+        'end_time': endTime,
+        'room': room,
       };
 }
