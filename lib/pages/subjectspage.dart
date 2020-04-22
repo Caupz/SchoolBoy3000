@@ -52,7 +52,8 @@ class SubjectsPage extends StatelessWidget {
               size: 44.0,
               ),
               onPressed: () {
-                AppDB.delete(semester, subjectName, teacherName); //Needs doing
+                AppDB.delete("subject", "id", index); //Needs doing
+                list.removeAt(index);
               },
             ),
           ),
