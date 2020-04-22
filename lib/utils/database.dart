@@ -10,7 +10,7 @@ class AppDB {
   static runMigration(Database db) async {
     //await db.execute('DROP TABLE subject;');
     //await db.execute("DROP TABLE subject_entry;");
-    await db.execute('CREATE TABLE IF NOT EXISTS subject (id INTEGER PRIMARY KEY AUTOINCREMENT, weekday TEXT NOT NULL, semester TEXT NOT NULL, subject TEXT NOT NULL, teacher TEXT NOT NULL, info TEXT NOT NULL);');
+    await db.execute('CREATE TABLE IF NOT EXISTS subject (id INTEGER PRIMARY KEY AUTOINCREMENT, semester TEXT NOT NULL, subject TEXT NOT NULL, teacher TEXT NOT NULL, info TEXT NOT NULL);');
     await db.execute('CREATE TABLE IF NOT EXISTS subject_entry (id INTEGER PRIMARY KEY AUTOINCREMENT, selected_day TEXT NOT NULL, subject TEXT NOT NULL, start_time TEXT NOT NULL, end_time TEXT NOT NULL, room TEXT NOT NULL);');
     debugPrint('EXECUTING MIGRATIONS DONE');
   }
