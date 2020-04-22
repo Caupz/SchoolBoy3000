@@ -55,7 +55,7 @@ class SubjectsPage extends StatelessWidget {
               size: 44.0,
               ),
               onPressed: () {
-                AppDB.delete("subject", "id", id);
+                AppDB.delete("subject", "id", index); //Needs doing
                 list.removeAt(index);
               },
             ),

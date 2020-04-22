@@ -62,7 +62,7 @@ class MainModel extends Model {
   }
 
   void updateModelName(int id, String updateValue){
-    subjects[id].name  = updateValue;
+    subjects[id].subject  = updateValue;
   }
 
   void updateModelTeacher(int id, String updateValue){

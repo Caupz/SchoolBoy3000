@@ -16,4 +16,20 @@ class SubjectEntry {
     this.endTime = _endTime.toString();
     this.room = _room;
   }
+
+  Subject.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        semester = json['semester'],
+        subject = json['subject'],
+        teacher = json['teacher'],
+        info = json['info'];
+
+  Map<String, dynamic> toJson() =>
+      {
+        'id': id,
+        'semester': semester,
+        'subject': subject,
+        'teacher': teacher,
+        'info': info,
+      };
 }
