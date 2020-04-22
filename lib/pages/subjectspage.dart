@@ -4,6 +4,7 @@ import 'package:schoolboy3000/utils/database.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../models/mainmodel.dart';
 import 'package:schoolboy3000/models/subject.dart';
+import 'package:schoolboy3000/pages/subjectedit.dart';
 
 class SubjectsPage extends StatelessWidget {
   final String pageText;
@@ -26,6 +27,7 @@ class SubjectsPage extends StatelessWidget {
             child: new RaisedButton(
                 child: Text(semester),
                 onPressed: () {
+					SubjectEdit.createClassroomEditDialog(ctxt, semester, id, model);
                   // TODO minna vastava variable id ehk list[index].id subject muutmisse.
                 }),
           ),
@@ -33,6 +35,7 @@ class SubjectsPage extends StatelessWidget {
             child: new RaisedButton(
                 child: Text(subjectName),
                 onPressed: () {
+					SubjectEdit.createSubjectEditDialog(ctxt, subjectName, id, model);
                   // TODO minna vastava variable id ehk list[index].id subject muutmisse.
                 }),
           ),
@@ -40,7 +43,7 @@ class SubjectsPage extends StatelessWidget {
             child: new RaisedButton(
                 child: Text(teacherName),
                 onPressed: () {
-                  // TODO minna vastava variable id ehk list[index].id subject muutmisse.
+                  SubjectEdit.createProfessorEditDialog(ctxt, teacherName, id, model);
                 }),
           ),
           Expanded(
