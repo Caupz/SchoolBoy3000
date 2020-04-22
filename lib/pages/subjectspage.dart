@@ -14,7 +14,7 @@ class SubjectsPage extends StatelessWidget {
     List<Subject> list = model.subjects;
 
     int id = list[index].id; // TODO seda kasutada onPressed muutmisse minnes.
-    String subjectName = list[index].name;
+    String subjectName = list[index].subject;
     String teacherName = list[index].teacher;
     String semester = list[index].semester;
 
@@ -27,7 +27,7 @@ class SubjectsPage extends StatelessWidget {
             child: new RaisedButton(
                 child: Text(semester),
                 onPressed: () {
-					SubjectEdit.createClassroomEditDialog(ctxt, semester, id, model);
+                  SubjectEdit.createClassroomEditDialog(ctxt, semester, id, model);
                   // TODO minna vastava variable id ehk list[index].id subject muutmisse.
                 }),
           ),
@@ -35,7 +35,7 @@ class SubjectsPage extends StatelessWidget {
             child: new RaisedButton(
                 child: Text(subjectName),
                 onPressed: () {
-					SubjectEdit.createSubjectEditDialog(ctxt, subjectName, id, model);
+                  SubjectEdit.createSubjectEditDialog(ctxt, subjectName, id, model);
                   // TODO minna vastava variable id ehk list[index].id subject muutmisse.
                 }),
           ),
@@ -50,13 +50,15 @@ class SubjectsPage extends StatelessWidget {
             child: new IconButton(
               padding: EdgeInsets.only(bottom: 1.0),
               icon: new Icon(
-              Icons.delete,
-              color: Colors.black,
-              size: 44.0,
+                Icons.delete,
+                color: Colors.black,
+                size: 44.0,
               ),
               onPressed: () {
-                AppDB.delete("subject", "id", index); //Needs doing
+                AppDB.delete("subject", "id", id); //Needs doing
                 list.removeAt(index);
+                Navigator.of(ctxt).pop();
+                Navigator.of(ctxt).push(new MaterialPageRoute(builder: (BuildContext context)=> SubjectsPage("")));
               },
             ),
           ),
