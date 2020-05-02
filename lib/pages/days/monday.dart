@@ -4,7 +4,6 @@ import 'package:schoolboy3000/utils/database.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../../models/mainmodel.dart';
 import 'package:schoolboy3000/models/subjectentry.dart';
-import 'package:intl/intl.dart';
 
 class Monday extends StatelessWidget {
   final String pageText;
@@ -98,7 +97,7 @@ class Monday extends StatelessWidget {
                       child: Text('Add a new subject', style: TextStyle(fontSize: 20)),
                       onPressed: (){
                         //Navigator.of(context).pop();
-                        Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> Mondayroute("Mondayroute")));
+                        Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> MondayRoute(title: "MondayRoute",)));
                       },
                     )
                 ),

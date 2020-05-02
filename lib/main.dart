@@ -52,8 +52,8 @@ class MyApp extends StatelessWidget {
 
         for(int i = 0; i < list.length; i++) {
           int id = -2;
-          String day = "", sub = "", room = "";
-          String stime, etime;
+          String day = "", sub = "", room = "", ttype ="";
+          String stime, etime, ttime;
 
           list[i].forEach((key, value) {
             switch(key) {
@@ -63,11 +63,13 @@ class MyApp extends StatelessWidget {
               case "start_time": stime = value; break;
               case "end_time": etime = value; break;
               case "room": room = value; break;
+              case "transportType": ttype = value; break;
+              case "departureTime": ttime = value; break;
             }
 
           });
           debugPrint("subject id "+id.toString()+" name "+sub);
-          model.addSubjectEntry(id, day, sub, stime, etime, room, false, false);
+          model.addSubjectEntry(id, day, sub, stime, etime, room,ttype,ttime, false, false);
         }
       })
       .catchError((error) => () {

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:schoolboy3000/pages/subjectspage.dart';
-import 'package:schoolboy3000/utils/database.dart';
-import 'dart:convert';
 import 'package:scoped_model/scoped_model.dart';
 import '../../models/mainmodel.dart';
-import 'package:schoolboy3000/pages/days/monday.dart';
-import 'package:schoolboy3000/models/subjectentry.dart';
 
-class Mondayroute extends StatelessWidget {
-  final String pageText;
-  Mondayroute(this.pageText);
+class MondayRoute extends StatefulWidget{
+  final String title;
+  MondayRoute({Key key, @required this.title}) : super(key : key);
+
+  @override
+  _MondayRouteState createState() => _MondayRouteState();
+}
+
+
+class _MondayRouteState extends State<MondayRoute>{
   String dropdownSubject = "Teoreetiline informaatika";
   String dropdownDay = "Monday";
   String selectedDay = "Monday";
@@ -18,15 +20,27 @@ class Mondayroute extends StatelessWidget {
   String startTime = "";
   String endTime = "";
   String room = "NO-ROOM";
-
+  String transportType = "NO-TRANSPORT";
+  String departureTime = "";
   String _time = "Not set";
+
+
+  TextEditingController _controller;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = new TextEditingController(text: "");
+    
+  }
 
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
         return new Scaffold(
-          appBar: new AppBar(title: new Text(pageText),),
+          appBar: new AppBar(title: new Text(widget.title),),
           body: Column(children: <Widget>[
             Container(
                 color: Colors.white,
@@ -151,6 +165,68 @@ class Mondayroute extends StatelessWidget {
                     child: Text('Choose the ending time',)
                 )
             ),
+            RaisedButton(
+              color: Color(0xff0091EA),
+              padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+              child: Text("Transport"),
+              onPressed: (){
+                showDialog(context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Form(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Container(
+                                  padding: EdgeInsets.fromLTRB(60, 0, 25, 0),
+                                  child: TextField(
+                                    onChanged: (String newValue) {
+                                      transportType = newValue;
+                                    },
+                                    controller: _controller,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "Transpordi tüüp"
+                                    ),
+                                  )
+                              ),
+                              FlatButton(
+                                onPressed: () {
+                                  DatePicker.showTimePicker(context,
+                                    theme: DatePickerTheme(
+                                      containerHeight: 210.0,
+                                    ),
+                                    showTitleActions: true,
+                                    onConfirm: (time) {
+                                      debugPrint('confirm $time');
+                                      print(departureTime);
+                                      _time = '${time.hour} - ${time.minute}';
+                                      setState(() {
+                                        departureTime = _time;
+                                      });
+
+                                          },
+                                          currentTime: DateTime.now(), locale: LocaleType.en);
+                                    },
+                                    child: Text(departureTime == "" ? "Departure Time" : departureTime)
+                              ), 
+                              ButtonTheme(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: RaisedButton(
+                                    child: Text("Close"),
+                                    onPressed: () => Navigator.pop(context),
+                                ),
+                                  ),
+                              ),
+                                ],
+                      )
+                      ),
+                  );
+                }
+                );
+              },
+            ),
             Container(
                 width: MediaQuery
                     .of(context)
@@ -164,7 +240,8 @@ class Mondayroute extends StatelessWidget {
                   onPressed: () {
                     //tahad tagasi minna siis pop enne data savemist, muidu ei tööta
                     Navigator.of(context).pop();
-                    model.addSubjectEntry(-1, selectedDay, subject, startTime, endTime, room, true, true);
+                    model.addSubjectEntry(-1, selectedDay, subject, startTime, endTime, room,transportType,departureTime, true, true);
+                    //model.addSubjectEntry(1, "Friday", subject, startTime, endTime, room, transportType, departureTime, true, true);
                    // Navigator.of(context).push(new MaterialPageRoute(
                        // builder: (BuildContext context) => new Monday("Monday")),);
                   },

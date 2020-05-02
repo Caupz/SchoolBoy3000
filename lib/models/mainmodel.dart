@@ -13,8 +13,8 @@ class MainModel extends Model {
     return _subjectEntries;
   }
 
-  void addSubjectEntry(int id, String selectedDay, String subject, String startTime, String endTime, String room, bool saveToDB, bool notifiy) {
-    SubjectEntry entry = new SubjectEntry(id, selectedDay, subject, startTime, endTime, room);
+  void addSubjectEntry(int id, String selectedDay, String subject, String startTime, String endTime, String room, String transportType, String departureTime, bool saveToDB, bool notifiy) {
+    SubjectEntry entry = new SubjectEntry(id, selectedDay, subject, startTime, endTime, room, transportType, departureTime);
     _subjectEntries.add(entry);
 
     if(saveToDB) {
@@ -32,6 +32,7 @@ class MainModel extends Model {
       notifyListeners();
     }
   }
+
   //-----------------------------------------------------------------------------------------
   //subjects to db
   List<Subject> _subjects = new List<Subject>();
