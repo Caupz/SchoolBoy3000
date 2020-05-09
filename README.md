@@ -22,6 +22,6 @@
 
 ## Kasutatud tehnoloogiad:
 * Android Studio 3.6.3
-* Flutter SDK 1.17.0
-* Dart SDK 2.8.1
+* Flutter 1.17.0
+* Dart 2.8.1
 
