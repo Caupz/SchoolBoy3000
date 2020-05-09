@@ -17,9 +17,11 @@
 * flutter - https://flutter.dev/docs/get-started/install
 * Peale Android Studio käivitamist kirjutada käsureale flutter pub get.
 * Seadistada Virtual Device AVD Manager'i alt. 
-* Tõmmata alla kogu see repositoorium ja lahti pakkida
-* Jooksuta rakendust
+* Tõmmata alla kogu see repositoorium ja lahti pakkida.
+* Jooksuta rakendust.
 
 ## Kasutatud tehnoloogiad:
-
+* Android Studio 3.6.3
+* Flutter SDK 1.17.0
+* Dart SDK 2.8.1
 
