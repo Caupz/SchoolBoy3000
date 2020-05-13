@@ -27,7 +27,7 @@ class SubjectsPage extends StatelessWidget {
             child: new RaisedButton(
                 child: Text(semester),
                 onPressed: () {
-                  SubjectEdit.createClassroomEditDialog(ctxt, semester, id, model);
+                  SubjectEdit.createClassroomEditDialog(ctxt, semester, index, model);
                   // TODO minna vastava variable id ehk list[index].id subject muutmisse.
                 }),
           ),
@@ -35,7 +35,7 @@ class SubjectsPage extends StatelessWidget {
             child: new RaisedButton(
                 child: Text(subjectName),
                 onPressed: () {
-                  SubjectEdit.createSubjectEditDialog(ctxt, subjectName, id, model);
+                  SubjectEdit.createSubjectEditDialog(ctxt, subjectName, index, model);
                   // TODO minna vastava variable id ehk list[index].id subject muutmisse.
                 }),
           ),
@@ -43,7 +43,7 @@ class SubjectsPage extends StatelessWidget {
             child: new RaisedButton(
                 child: Text(teacherName),
                 onPressed: () {
-                  SubjectEdit.createProfessorEditDialog(ctxt, teacherName, id, model);
+                  SubjectEdit.createProfessorEditDialog(ctxt, teacherName, index, model);
                 }),
           ),
           Expanded(

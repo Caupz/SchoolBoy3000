@@ -56,10 +56,7 @@ class MainModel extends Model {
     }
   }
   void updateDb(int id, String fieldToUpdate, String updateVal){
-    //print("JDP");
-    //print(subjects[0].id);
     AppDB.update("subject", fieldToUpdate, updateVal, "id", id);
-    //AppDB.results();
   }
 
   void updateModelName(int id, String updateValue){

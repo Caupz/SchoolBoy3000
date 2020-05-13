@@ -10,7 +10,7 @@ class SubjectEdit {
 
     return showDialog(context: ctxt, builder: (context) {
       return AlertDialog(
-        title: Text("Edit classroom: "),
+        title: Text("Edit semester: "),
         content: TextFormField(
             decoration: InputDecoration(
               hintText: semester,
@@ -48,11 +48,13 @@ class SubjectEdit {
 
         ),
         actions: <Widget>[
-          MaterialButton(
+          RaisedButton(
             elevation: 5.0,
             child: Text("Submit"),
             onPressed: (){
-              model.updateDb(id, "name", customController.text);
+              //model.updateDb(id, "name", customController.text);
+              print(id);
+              print(customController.text);
               model.updateModelName(id, customController.text);
               Navigator.of(context).pop();
             },
@@ -77,7 +79,7 @@ class SubjectEdit {
             controller: customController
         ),
         actions: <Widget>[
-          MaterialButton(
+          RaisedButton(
             elevation: 5.0,
             child: Text("Submit"),
             onPressed: (){
