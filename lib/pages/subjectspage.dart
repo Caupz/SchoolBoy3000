@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schoolboy3000/pages/subjectsroute.dart';
+import 'package:schoolboy3000/Routes/subjectsroute.dart';
 import 'package:schoolboy3000/utils/database.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../models/mainmodel.dart';

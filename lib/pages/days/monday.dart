@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:schoolboy3000/pages/days/mondayroute.dart';
+import 'package:schoolboy3000/Routes/mondayroute.dart';
 import 'package:schoolboy3000/utils/database.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../../models/mainmodel.dart';
@@ -27,7 +27,6 @@ class Monday extends StatelessWidget {
     return new Container(
       margin: const EdgeInsets.fromLTRB(20, 10, 0, 0),
       child: new Column(
-
         children: <Widget>[
           Container(
             child: new RaisedButton(
