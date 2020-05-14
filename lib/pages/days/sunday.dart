@@ -72,8 +72,11 @@ class Sunday extends StatelessWidget {
                 size: 44.0,
               ),
               onPressed: () {
-                AppDB.delete('subject_entry','id', id); //Needs doing
-              },
+                AppDB.delete('subject_entry','id', id);
+                list.removeAt(index);
+                Navigator.of(ctxt).pop();
+                Navigator.of(ctxt).push(new MaterialPageRoute(builder: (BuildContext context)=> Sunday("")));
+                },
             ),
           ),
         ],
