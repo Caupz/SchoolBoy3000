@@ -15,6 +15,34 @@ void main() {
 
 class MyApp extends StatelessWidget {
 
+  void getSemesters(MainModel model)  {
+    Future<dynamic> semesters = AppDB.select("semester", "", null);
+
+    semesters.then((value) {
+      List<Map> list = value;
+
+      for(int i = 0; i < list.length; i++) {
+        int id = 0, order=0;
+        String name = "", season = "";
+
+        list[i].forEach((key, value) {
+          switch(key) {
+            case "id": id = value; break;
+            case "semester_name": name = value; break;
+            case "semester_order": order = value; break;
+            case "semester_season": season = value; break;
+          }
+
+        });
+        debugPrint("semester id "+id.toString()+" name "+name);
+        model.addSemesters(id, name, order, season, false, false);
+      }
+    })
+        .catchError((error) => () {
+      debugPrint("getSemesters ERROR: $error");
+    });
+  }
+
   void getSubjects(MainModel model)  {
     Future<dynamic> subjects = AppDB.select("subject", "", null);
 

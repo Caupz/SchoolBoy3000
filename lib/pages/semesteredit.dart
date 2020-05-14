@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import '../models/mainmodel.dart';
 
+class SemesterEdit {
 
-
-class SubjectEdit {
-
-    static createClassroomEditDialog(BuildContext ctxt, String semester, int id, MainModel model) {
+  static createSemesterNameEditDialog(BuildContext ctxt, String semesterName, int id, MainModel model) {
     TextEditingController customController = TextEditingController();
 
     return showDialog(context: ctxt, builder: (context) {
       return AlertDialog(
-        title: Text("Edit classroom: "),
+        title: Text("Edit semester name: "),
         content: TextFormField(
             decoration: InputDecoration(
-              hintText: semester,
+              hintText: semesterName,
             ),
             controller: customController
         ),
@@ -22,26 +20,28 @@ class SubjectEdit {
             elevation: 5.0,
             child: Text("Save"),
             onPressed: () {
-              model.updateDb(id, "semester", customController.text);
-              model.updateModelSemester(id, customController.text);
+              model.updateSemesterDb(id, "semesterName", customController.text);
+              model.updateModelSemesterName(id, customController.text);
               Navigator.of(context).pop();
             },
           )
         ],
+
       );
     });
   }
 
-   static createSubjectEditDialog(BuildContext ctxt, String subjectName, int id, MainModel model){
+  static createSemesterOrderEditDialog(BuildContext ctxt, int semesterOrder, int id, MainModel model){
 
     TextEditingController customController = TextEditingController();
 
     return showDialog(context: ctxt, builder: (context){
       return AlertDialog(
-        title: Text("Edit subject: "),
+        title: Text("Edit semester order: "),
         content: TextFormField(
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
-            hintText: subjectName,
+            hintText: semesterOrder.toString(),
           ),
           controller: customController,
 
@@ -49,10 +49,10 @@ class SubjectEdit {
         actions: <Widget>[
           MaterialButton(
             elevation: 5.0,
-            child: Text("Submit"),
+            child: Text("Save"),
             onPressed: (){
-              model.updateDb(id, "name", customController.text);
-              model.updateModelName(id, customController.text);
+              model.updateSemesterDb(id, "semesterOrder", customController.text);
+              model.updateModelSemesterOrder(id, customController.text);
               Navigator.of(context).pop();
             },
           )
@@ -62,32 +62,36 @@ class SubjectEdit {
     });
   }
 
-   static createProfessorEditDialog(BuildContext ctxt, String teacherName, int id, MainModel model){
+  static createSemesterSeasonEditDialog(BuildContext ctxt, String semesterSeason, int id, MainModel model){
 
     TextEditingController customController = TextEditingController();
 
     return showDialog(context: ctxt, builder: (context){
       return AlertDialog(
-        title: Text("Edit professor : "),
-        content: TextFormField(
-            decoration: InputDecoration(
-              hintText: teacherName,
-            ),
-            controller: customController
-        ),
+        title: Text("Edit semester season: "),
+        content: Text("Autumn or spring?"),
         actions: <Widget>[
           MaterialButton(
             elevation: 5.0,
-            child: Text("Submit"),
+            child: Text("AUTUMN"),
             onPressed: (){
               print(id);
-              model.updateDb(id, "teacher", customController.text);
-              model.updateModelTeacher(id, customController.text);
+              model.updateSemesterDb(id, "semesterSeason", "AUTUMN");
+              model.updateModelSemesterSeason(id, "AUTUMN");
+              Navigator.of(context).pop();
+            },
+          ),
+          MaterialButton(
+            elevation: 5.0,
+            child: Text("SPRING"),
+            onPressed: (){
+              print(id);
+              model.updateSemesterDb(id, "semesterSeason", "SPRING");
+              model.updateModelSemesterSeason(id, "SPRING");
               Navigator.of(context).pop();
             },
           )
         ],
-
       );
     });
   }

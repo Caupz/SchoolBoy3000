@@ -4,6 +4,7 @@ import 'package:schoolboy3000/pages/homepage.dart';
 import 'package:schoolboy3000/pages/lessonspage.dart';
 import 'package:schoolboy3000/pages/settings.dart';
 import 'package:schoolboy3000/pages/subjectspage.dart';
+import 'package:schoolboy3000/pages/semesterspage.dart';
 
 class DrawerWidget extends StatelessWidget{
   @override
@@ -17,6 +18,14 @@ class DrawerWidget extends StatelessWidget{
               onTap: (){
                 Navigator.of(context).pop();
                 Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> CalendarPage("Calendar page")));
+              },
+            ),
+            new ListTile(
+              title: new Text("Semester", style: new TextStyle(fontSize: 20.0),),
+              leading: new Icon(Icons.timelapse),
+              onTap: (){
+                Navigator.of(context).pop();
+                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> SemestersPage("Semesters page")));
               },
             ),
             new ListTile(
