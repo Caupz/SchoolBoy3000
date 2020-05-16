@@ -1,4 +1,5 @@
 # Schoolboy3000
+Rakenduse eesmärk oli luua sarnane keskkond nagu antud veebilehel https://caupo.ee/tlu/ ehk abimees õpilasele, kuid lisavõimekustega, kus seda paremini saaks kohendada endale vastavaks. Saaks ise luua kategooriaid (ehk antud juhul semestreid). Iga kategooria alla lisada aineid (ja sellele lisainformatsioonina märkmeid jms) ning ained lisada mingitesse kindlatesse nädalapäevadesse, kus samuti saaks lisada, et mis päeval peab väljuma kodust ning mis transpordivahendiga. 
 
 ## Tallinna Ülikool 2020 Digitehnoloogia instituut, informaatika eriala. Projekt on loodud mobiilirakenduste arendamise kursuse raames.
 
