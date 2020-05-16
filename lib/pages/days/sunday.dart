@@ -7,10 +7,12 @@ import 'package:schoolboy3000/models/subjectentry.dart';
 
 class Sunday extends StatelessWidget {
   final String pageText;
+
   Sunday(this.pageText);
 
   Widget buildBody(BuildContext ctxt, int index, MainModel model) {
-    List<SubjectEntry> list = model.subjectEntries;
+    List<SubjectEntry> list =
+        model.subjectEntries.where((i) => i.selectedDay == "Sunday").toList();
 
     int id = list[index].id; // TODO seda kasutada onPressed muutmisse minnes.
     String selected_day = list[index].selectedDay;
@@ -72,11 +74,12 @@ class Sunday extends StatelessWidget {
                 size: 44.0,
               ),
               onPressed: () {
-                AppDB.delete('subject_entry','id', id);
-                list.removeAt(index);
+                AppDB.delete('subject_entry', 'id', id);
+                model.subjectEntries.removeAt(index);
                 Navigator.of(ctxt).pop();
-                Navigator.of(ctxt).push(new MaterialPageRoute(builder: (BuildContext context)=> Sunday("")));
-                },
+                Navigator.of(ctxt).push(new MaterialPageRoute(
+                    builder: (BuildContext context) => Sunday("")));
+              },
             ),
           ),
         ],
@@ -88,34 +91,46 @@ class Sunday extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
-          return new Scaffold(
-              appBar: new AppBar(title: new Text(pageText),),
-              body: Column(children: <Widget>[
-                Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    child: RaisedButton(
-                      padding: EdgeInsets.all(15.0),
-                      child: Text('Add a new subject', style: TextStyle(fontSize: 20)),
-                      onPressed: (){
-                        //Navigator.of(context).pop();
-                        Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> SundayRoute(title: "SundayRoute",)));
-                      },
-                    )
-                ),
-                Container(
-                    margin: const EdgeInsets.fromLTRB(20, 20, 0, 10),
-                    width: MediaQuery.of(context).size.width,
-                    child: Text('All subjects on sunday:', style: TextStyle(fontSize: 20))
-                ),
-                new ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: model.subjectEntries.length,
-                    itemBuilder: (BuildContext ctxt, int index) => buildBody(ctxt, index, model)
-                )
-              ])
-          );
-        });
+      return new Scaffold(
+          appBar: new AppBar(
+            title: new Text(pageText),
+          ),
+          body: Column(children: <Widget>[
+            Container(
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                child: RaisedButton(
+                  padding: EdgeInsets.all(15.0),
+                  child:
+                      Text('Add a new subject', style: TextStyle(fontSize: 20)),
+                  onPressed: () {
+                    //Navigator.of(context).pop();
+                    Navigator.of(context).push(new MaterialPageRoute(
+                        builder: (BuildContext context) => SundayRoute(
+                              title: "SundayRoute",
+                            )));
+                  },
+                )),
+            Container(
+                margin: const EdgeInsets.fromLTRB(20, 20, 0, 10),
+                width: MediaQuery.of(context).size.width,
+                child: model.subjectEntries
+                        .where((i) => i.selectedDay == "Sunday")
+                        .toList()
+                        .isNotEmpty
+                    ? Text('All subjects on sunday:',
+                        style: TextStyle(fontSize: 20))
+                    : Text("There are no subjects on sunday")),
+            new ListView.builder(
+                shrinkWrap: true,
+                itemCount: model.subjectEntries
+                    .where((i) => i.selectedDay == "Sunday")
+                    .toList()
+                    .length,
+                itemBuilder: (BuildContext ctxt, int index) =>
+                    buildBody(ctxt, index, model))
+          ]));
+    });
   }
 }
 
