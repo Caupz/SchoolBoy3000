@@ -49,11 +49,9 @@ class SubjectEdit {
         actions: <Widget>[
           RaisedButton(
             elevation: 5.0,
-            child: Text("Submit"),
+            child: Text("Save"),
             onPressed: (){
-              //model.updateDb(id, "name", customController.text);
-              print(id);
-              print(customController.text);
+              model.updateDb(id, "subject", customController.text);
               model.updateModelName(id, customController.text);
               Navigator.of(context).pop();
             },
@@ -80,9 +78,8 @@ class SubjectEdit {
         actions: <Widget>[
           RaisedButton(
             elevation: 5.0,
-            child: Text("Submit"),
+            child: Text("Save"),
             onPressed: (){
-              print(id);
               model.updateDb(id, "teacher", customController.text);
               model.updateModelTeacher(id, customController.text);
               Navigator.of(context).pop();

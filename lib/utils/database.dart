@@ -55,7 +55,7 @@ class AppDB {
     return str;
   }
 
-  static update<E>(String tableName, String fieldToUpdate, E updateVal, String conditionField, E conditionVal) async {
+  static update(String tableName, String fieldToUpdate, String updateVal, String conditionField, int conditionVal) async {
     var db = await openDatabase('schoolboy.db');
     int count = await db.rawUpdate(
         'UPDATE '+tableName+' SET '+fieldToUpdate+' = ? WHERE '+conditionField+' = ?',

@@ -57,7 +57,7 @@ class MainModel extends Model {
     }
   }
   void updateDb(int id, String fieldToUpdate, String updateVal){
-    AppDB.update("subject", fieldToUpdate, updateVal, "id", id);
+    AppDB.update("subject", fieldToUpdate, updateVal, "id", id + 1);
   }
 
   void updateModelName(int id, String updateValue){
