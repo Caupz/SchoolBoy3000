@@ -2,6 +2,9 @@
 
 ## Tallinna Ülikool 2020 Digitehnoloogia instituut, informaatika eriala. Projekt on loodud mobiilirakenduste arendamise kursuse raames.
 
+## Demovideo:
+https://www.youtube.com/watch?v=niDGMTeovyc
+
 ## Liikmed:
 * Andri Kaljumäe
 * Caupo Helvik
