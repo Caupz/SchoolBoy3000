@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:schoolboy3000/Routes/subjectsroute.dart';
+import 'package:schoolboy3000/Routes/semestersroute.dart';
 import 'package:schoolboy3000/utils/database.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../models/mainmodel.dart';
-import 'package:schoolboy3000/models/subject.dart';
-import 'package:schoolboy3000/pages/subjectedit.dart';
+import 'package:schoolboy3000/models/semester.dart';
+import 'package:schoolboy3000/pages/semesteredit.dart';
 
-class SubjectsPage extends StatelessWidget {
+
+class SemestersPage extends StatelessWidget {
   final String pageText;
-  SubjectsPage(this.pageText);
+  SemestersPage(this.pageText);
 
   Widget buildBody(BuildContext ctxt, int index, MainModel model) {
-    List<Subject> list = model.subjects;
+    List<Semester> list = model.semesters;
 
-    int id = list[index].id; // TODO seda kasutada onPressed muutmisse minnes.
-    String subjectName = list[index].subject;
-    String teacherName = list[index].teacher;
-    String semester = list[index].semester;
+    int id = list[index].id;
+    String semesterName = list[index].semesterName;
+    int semesterOrder = list[index].semesterOrder;
+    String semesterSeason = list[index].semesterSeason;
 
     return new Container(
       margin: const EdgeInsets.fromLTRB(20, 10, 0, 0),
@@ -25,25 +26,26 @@ class SubjectsPage extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: new RaisedButton(
-                child: Text(semester),
+                child: Text(semesterName),
                 onPressed: () {
-                  SubjectEdit.createClassroomEditDialog(ctxt, semester, index, model);
-                  // TODO minna vastava variable id ehk list[index].id subject muutmisse.
+                  SemesterEdit.createSemesterNameEditDialog(ctxt, semesterName, id, model);
+                  // TODO minna vastava variable id ehk list[index].id semester muutmisse.
                 }),
           ),
           Expanded(
             child: new RaisedButton(
-                child: Text(subjectName),
+                child: Text(semesterOrder.toString()),
                 onPressed: () {
-                  SubjectEdit.createSubjectEditDialog(ctxt, subjectName, index, model);
-                  // TODO minna vastava variable id ehk list[index].id subject muutmisse.
+                  SemesterEdit.createSemesterOrderEditDialog(ctxt, semesterOrder, id, model);
+                  // TODO minna vastava variable id ehk list[index].id semester muutmisse.
                 }),
           ),
           Expanded(
             child: new RaisedButton(
-                child: Text(teacherName),
+                child: Text(semesterSeason),
                 onPressed: () {
-                  SubjectEdit.createProfessorEditDialog(ctxt, teacherName, index, model);
+                  SemesterEdit.createSemesterSeasonEditDialog(ctxt, semesterSeason, id, model);
+                  // TODO minna vastava variable id ehk list[index].id semester muutmisse.
                 }),
           ),
           Expanded(
@@ -55,10 +57,10 @@ class SubjectsPage extends StatelessWidget {
                 size: 44.0,
               ),
               onPressed: () {
-                AppDB.delete("subject", "id", id); //Needs doing
+                AppDB.delete("semester", "id", id);
                 list.removeAt(index);
                 Navigator.of(ctxt).pop();
-                Navigator.of(ctxt).push(new MaterialPageRoute(builder: (BuildContext context)=> SubjectsPage("")));
+                Navigator.of(ctxt).push(new MaterialPageRoute(builder: (BuildContext context)=> SemestersPage("")));
               },
             ),
           ),
@@ -79,21 +81,21 @@ class SubjectsPage extends StatelessWidget {
                     height: 50,
                     child: RaisedButton(
                       padding: EdgeInsets.all(15.0),
-                      child: Text('Add a new subject', style: TextStyle(fontSize: 20)),
+                      child: Text('Add a new semester', style: TextStyle(fontSize: 20)),
                       onPressed: (){
                         Navigator.of(context).pop();
-                        Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> SubjectsRoute("Subjects route")));
+                        Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> SemestersRoute("Semesters route")));
                       },
                     )
                 ),
                 Container(
                     margin: const EdgeInsets.fromLTRB(20, 20, 0, 10),
                     width: MediaQuery.of(context).size.width,
-                    child: Text('All subjects:', style: TextStyle(fontSize: 20))
+                    child: Text('All semesters:', style: TextStyle(fontSize: 20))
                 ),
                 new ListView.builder(
                     shrinkWrap: true,
-                    itemCount: model.subjects.length,
+                    itemCount: model.semesters.length,
                     itemBuilder: (BuildContext ctxt, int index) => buildBody(ctxt, index, model)
                 )
               ])

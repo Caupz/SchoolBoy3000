@@ -4,6 +4,7 @@ import 'package:schoolboy3000/utils/database.dart';
 import 'dart:convert';
 import 'package:schoolboy3000/models/subject.dart';
 import 'package:schoolboy3000/models/subjectentry.dart';
+import 'package:schoolboy3000/models/semester.dart';
 
 class MainModel extends Model {
   //lessonplan to db
@@ -42,8 +43,8 @@ class MainModel extends Model {
   }
 
   void addSubjects(int id, String semester, String name, String teacher, String info, bool saveToDB, bool notifiy) {
-    Subject subject = new Subject(id, semester, name, teacher, info);
-    _subjects.add(subject);
+      Subject subject = new Subject(id, semester, name, teacher, info);
+      _subjects.add(subject);
 
     if(saveToDB) {
       subject.id = null;
@@ -70,4 +71,44 @@ class MainModel extends Model {
   void updateModelSemester(int id, String updateValue){
     subjects[id].semester = updateValue;
   }
+
+//-----------------------------------------------------------------------------------------
+//semesters to db
+  List<Semester> _semesters = new List<Semester>();
+
+  List<Semester> get semesters {
+    return _semesters;
+  }
+
+  void addSemesters(int id, String semesterName, int semesterOrder, String semesterSeason, bool saveToDB, bool notifiy) {
+    Semester semester = new Semester(id, semesterName, semesterOrder, semesterSeason);
+    _semesters.add(semester);
+
+    if(saveToDB) {
+      semester.id = null;
+      String jsonStr = jsonEncode(semester);
+      AppDB.insertInto("semester", jsonStr);
+    }
+
+    if(notifiy) {
+      notifyListeners();
+    }
+  }
+  void updateSemesterDb(int id, String fieldToUpdate, String updateVal){
+    AppDB.update("semester", fieldToUpdate, updateVal, "id", id);
+  }
+
+  void updateModelSemesterName(int id, String updateValue){
+    semesters[id].semesterName  = updateValue;
+  }
+
+  void updateModelSemesterOrder(int id, String updateValue){
+    semesters[id].semesterOrder = int.parse(updateValue);
+  }
+
+  void updateModelSemesterSeason(int id, String updateValue){
+    semesters[id].semesterSeason = updateValue;
+  }
 }
+
+
