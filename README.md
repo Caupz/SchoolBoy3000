@@ -4,7 +4,7 @@ Rakenduse eesmärk oli luua sarnane keskkond nagu antud veebilehel https://caupo
 ## Tallinna Ülikool 2020 Digitehnoloogia instituut, informaatika eriala. Projekt on loodud mobiilirakenduste arendamise kursuse raames.
 
 ## Demovideo:
-https://www.youtube.com/watch?v=niDGMTeovyc
+https://www.youtube.com/watch?v=QrVnbEqhTlA
 
 ## Liikmed:
 * Andri Kaljumäe
